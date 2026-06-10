@@ -1,0 +1,42 @@
+-- Inventory Overview
+
+SELECT
+    category,
+    SUM(stock_quantity) AS total_stock
+FROM Products
+GROUP BY category;
+
+-- Pending Orders
+
+SELECT *
+FROM Orders
+WHERE order_status = 'Pending';
+
+-- Supplier Performance
+
+SELECT
+    supplier_name,
+    rating,
+    lead_time_days
+FROM Suppliers
+ORDER BY rating DESC;
+
+-- Expiring Products
+
+SELECT
+    p.product_name,
+    i.expiry_status
+FROM Products p
+JOIN Inventory i
+ON p.product_id = i.product_id
+WHERE i.expiry_status = 'Expiring Soon';
+
+-- Customer Demand
+
+SELECT
+    customer_type,
+    COUNT(*) AS total_orders
+FROM Customers c
+JOIN Orders o
+ON c.customer_id = o.customer_id
+GROUP BY customer_type;
