@@ -1,0 +1,41 @@
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    customer_type VARCHAR(50),
+    location VARCHAR(100)
+);
+
+CREATE TABLE Suppliers (
+    supplier_id INT PRIMARY KEY,
+    supplier_name VARCHAR(100),
+    rating DECIMAL(3,1),
+    lead_time_days INT
+);
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    stock_quantity INT,
+    shelf_life_days INT,
+    reorder_level INT,
+    supplier_id INT,
+    FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id)
+);
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    order_status VARCHAR(50),
+    delivery_method VARCHAR(50),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+CREATE TABLE Inventory (
+    inventory_id INT PRIMARY KEY,
+    product_id INT,
+    expiry_status VARCHAR(50),
+    inventory_value DECIMAL(10,2),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
